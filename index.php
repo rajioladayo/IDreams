@@ -30,35 +30,50 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
-
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+?>
+<?php
+// *** Validate request to login to this site.
+if (!isset($_SESSION)) {
+  session_start();
 }
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO user_account (id, username, password, fullname) VALUES (%s, %s, %s, %s)",
-                       GetSQLValueString($_POST['id'], "int"),
-                       GetSQLValueString($_POST['username'], "text"),
-                       GetSQLValueString($_POST['password'], "text"),
-                       GetSQLValueString($_POST['fullname'], "text"));
+$loginFormAction = $_SERVER['PHP_SELF'];
+if (isset($_GET['accesscheck'])) {
+  $_SESSION['PrevUrl'] = $_GET['accesscheck'];
+}
 
+if (isset($_POST['email'])) {
+  $loginUsername=$_POST['email'];
+  $password=$_POST['password'];
+  $newPassword = md5(sha1($password));
+  $MM_fldUserAuthorization = "";
+  $MM_redirectLoginSuccess = "index.php";
+  $MM_redirectLoginFailed = "login.php";
+  $MM_redirecttoReferrer = false;
   mysql_select_db($database_conn, $conn);
-  $Result1 = mysql_query($insertSQL, $conn) or die(mysql_error());
+  
+  $LoginRS__query=sprintf("SELECT email, password FROM user_account WHERE email=%s AND password=%s",
+    GetSQLValueString($loginUsername, "text"), GetSQLValueString($newPassword, "text")); 
+   
+  $LoginRS = mysql_query($LoginRS__query, $conn) or die(mysql_error());
+  $loginFoundUser = mysql_num_rows($LoginRS);
+  if ($loginFoundUser) {
+     $loginStrGroup = "";
+    
+	if (PHP_VERSION >= 5.1) {session_regenerate_id(true);} else {session_regenerate_id();}
+    //declare two session variables and assign them
+    $_SESSION['MM_Username'] = $loginUsername;
+    $_SESSION['MM_UserGroup'] = $loginStrGroup;	      
 
-  $insertGoTo = "?submitted";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
+    if (isset($_SESSION['PrevUrl']) && false) {
+      $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
+    }
+    header("Location: " . $MM_redirectLoginSuccess );
   }
-  header(sprintf("Location: %s", $insertGoTo));
+  else {
+    header("Location: ". $MM_redirectLoginFailed );
+  }
 }
-
-mysql_select_db($database_conn, $conn);
-$query_users = "SELECT * FROM user_account";
-$users = mysql_query($query_users, $conn) or die(mysql_error());
-$row_users = mysql_fetch_assoc($users);
-$totalRows_users = mysql_num_rows($users);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,7 +123,7 @@ $totalRows_users = mysql_num_rows($users);
 							<li><a href="checkout.php">Checkout</a></li>					
 							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <span class="caret"></span></a>
                             	<div class="dropdown-menu">
-              						<form action="" id="form_login" style="margin: 0; padding: 3px 5px;" accept-charset="utf-8" method="post">
+              						<form action="<?php echo $loginFormAction; ?>" id="form_login" style="margin: 0; padding: 3px 5px;" accept-charset="utf-8" method="POST">
                							 <fieldset class="control-group">
                     							<div class="controls">
                         								<div class="input-prepend" style="display: inline">
@@ -129,7 +144,7 @@ $totalRows_users = mysql_num_rows($users);
                 						<p class="navbar-text"><button type="submit" class="btn btn-inverse large" id="loginButton">Sign In</button></p>
                                      	<p id="createAccount"><a href="register.php">Create New Account</a>
             					</form>
-          					   </div>
+       					      </div>
                             </li>		
 						</ul>
 					</div>

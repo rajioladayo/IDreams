@@ -50,7 +50,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 	  mysql_select_db($database_conn, $conn);
 	  $Result1 = mysql_query($insertSQL, $conn) or die(mysql_error());
 	
-	  $insertGoTo = "index.php";
+	  $insertGoTo = "?";
 	  if (isset($_SERVER['QUERY_STRING'])) {
 		$insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
 		$insertGoTo .= $_SERVER['QUERY_STRING'];

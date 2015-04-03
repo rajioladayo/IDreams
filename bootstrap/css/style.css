@@ -11,7 +11,7 @@
 	width: 100%;
 }
 
-#confirm {
+#password1 {
 	display: block;
 	width: 95% !important;
 }
@@ -36,7 +36,17 @@
 	width: 95% !important;
 }
 
+#paswword{
+	display: block;
+	width: 95% !important;
+}
+
 #password{
+	display: block;
+	width: 95% !important;
+}
+
+#username{
 	display: block;
 	width: 95% !important;
 }
@@ -55,5 +65,10 @@
     text-align: center;
     vertical-align: middle;
     margin-top: 10px;
+}
+
+#error{
+	text-align:center;
+	color:#F00;
 }
 
