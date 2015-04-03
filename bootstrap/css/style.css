@@ -1,0 +1,59 @@
+.center-block {
+  width: 300px;
+  padding:15px;
+  border:solid 1px grey;
+  margin-right: auto !important;  
+  margin-left: auto !important;  
+}
+
+#registerButton {
+	display: block;
+	width: 100%;
+}
+
+#confirm {
+	display: block;
+	width: 95% !important;
+}
+
+#firstname {
+	display: block;
+	width: 95% !important;
+}
+
+#lastname {
+	display: block;
+	width: 95% !important;
+}
+
+#email {
+	display: block;
+	width: 95% !important;
+}
+
+#phone {
+	display: block;
+	width: 95% !important;
+}
+
+#password{
+	display: block;
+	width: 95% !important;
+}
+
+#loginButton{
+	display: block;
+	width: 100%;
+
+}
+
+#forgotPassword{
+	text-align:right;
+}
+
+#createAccount{
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 10px;
+}
+
