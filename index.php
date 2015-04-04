@@ -52,7 +52,7 @@ if (isset($_POST['email'])) {
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_conn, $conn);
   
-  $LoginRS__query=sprintf("SELECT email, password FROM user_account WHERE email=%s AND password=%s",
+  $LoginRS__query=sprintf("SELECT email, password, last_name FROM user_account WHERE email=%s AND password=%s",
     GetSQLValueString($loginUsername, "text"), GetSQLValueString($newPassword, "text")); 
    
   $LoginRS = mysql_query($LoginRS__query, $conn) or die(mysql_error());
@@ -63,8 +63,12 @@ if (isset($_POST['email'])) {
 	if (PHP_VERSION >= 5.1) {session_regenerate_id(true);} else {session_regenerate_id();}
     //declare two session variables and assign them
     $_SESSION['MM_Username'] = $loginUsername;
-    $_SESSION['MM_UserGroup'] = $loginStrGroup;	      
-
+    $_SESSION['MM_UserGroup'] = $loginStrGroup;	  
+	$lastname = mysql_fetch_row($LoginRS); 
+	$userLastName = $lastname[2];
+	//echo $userLastName;
+	//echo $_SESSION['MM_Username'];
+	
     if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
@@ -120,8 +124,9 @@ if (isset($_POST['email'])) {
 						<ul class="user-menu">				
 							<li><a href="#">My Account</a></li>
 							<li><a href="cart.php">My Cart</a></li>
-							<li><a href="checkout.php">Checkout</a></li>					
-							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <span class="caret"></span></a>
+							<li><a href="checkout.php">Checkout</a></li>				
+							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php $sessionUsername = $_SESSION['MM_Username'];
+									if(isset($sessionUsername)){echo "Login";}else{echo $userLastName;}?><span class="caret"></span></a>
                             	<div class="dropdown-menu">
               						<form action="<?php echo $loginFormAction; ?>" id="form_login" style="margin: 0; padding: 3px 5px;" accept-charset="utf-8" method="POST">
                							 <fieldset class="control-group">
