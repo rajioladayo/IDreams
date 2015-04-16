@@ -1,4 +1,4 @@
-
+<?php require_once('Connections/conn.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -54,25 +54,8 @@
 					<a href="index.php" class="logo pull-left"><img src="themes/images/logo.png" class="site_logo" alt=""></a>
 					<nav id="menu" class="pull-right">
 						<ul>
-							<li><a href="./products.php">Woman</a>					
-								<ul>
-									<li><a href="./products.php">Lacinia nibh</a></li>									
-									<li><a href="./products.php">Eget molestie</a></li>
-									<li><a href="./products.php">Varius purus</a></li>									
-								</ul>
-							</li>															
-							<li><a href="./products.php">Man</a></li>			
-							<li><a href="./products.php">Sport</a>
-								<ul>									
-									<li><a href="./products.php">Gifts and Tech</a></li>
-									<li><a href="./products.php">Ties and Hats</a></li>
-									<li><a href="./products.php">Cold Weather</a></li>
-								</ul>
-							</li>							
-							<li><a href="./products.php">Hangbag</a></li>
-							<li><a href="./products.php">Best Seller</a></li>
-							<li><a href="./products.php">Top Seller</a></li>
-						</ul>
+                        	<?php require('menu.php'); ?>
+                    	</ul>
 					</nav>
 				</div>
 			</section>
