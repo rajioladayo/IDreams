@@ -44,7 +44,7 @@ order by if(isnull(c.parent), 1, 2)";
 	
 if(isset($_GET['c'] )){$column = $_GET['c'];}
 
-	$product_query = "SELECT p1.product_name,p1.product_description,p1.quantity,p1.price
+	$product_query = "SELECT p1.id,p1.product_name,p1.price
 		    FROM products p1 INNER JOIN categories c1 on p1.code = c1.code
  			WHERE p1.code = '$column'";
 			

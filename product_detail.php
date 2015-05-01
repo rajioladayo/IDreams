@@ -1,4 +1,11 @@
 <?php require_once('Connections/conn.php'); ?>
+<?php
+	if(isset($_GET['id'] )){$column = $_GET['id'];}
+	mysql_select_db($database_conn, $conn);
+	$product_query = "SELECT product_name,product_description,price FROM products WHERE id = '$column'";
+	$product_result_query = mysql_query($product_query);
+	$pResult = mysql_fetch_assoc($product_result_query);
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -16,6 +23,8 @@
 		<!-- global styles -->
 		<link href="themes/css/main.css" rel="stylesheet"/>
 		<link href="themes/css/jquery.fancybox.css" rel="stylesheet"/>
+        
+        <link href="bootstrap/css/style.css" rel="stylesheet"> 
 				
 		<!-- scripts -->
 		<script src="themes/js/jquery-1.7.2.min.js"></script>
@@ -71,38 +80,26 @@
 								<a href="themes/images/ladies/1.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="themes/images/ladies/1.jpg"></a>												
 								<ul class="thumbnails small">								
 									<li class="span1">
-										<a href="themes/images/ladies/2.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="themes/images/ladies/2.jpg" alt=""></a>
+										<a href="themes/images/ladies/2.jpg" class="thumbnail" data-fancybox-group="group1"><img src="themes/images/ladies/2.jpg" alt=""></a>
 									</li>								
 									<li class="span1">
-										<a href="themes/images/ladies/3.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 3"><img src="themes/images/ladies/3.jpg" alt=""></a>
+										<a href="themes/images/ladies/3.jpg" class="thumbnail" data-fancybox-group="group1"><img src="themes/images/ladies/3.jpg" alt=""></a>
 									</li>													
 									<li class="span1">
-										<a href="themes/images/ladies/4.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 4"><img src="themes/images/ladies/4.jpg" alt=""></a>
+										<a href="themes/images/ladies/4.jpg" class="thumbnail" data-fancybox-group="group1"><img src="themes/images/ladies/4.jpg" alt=""></a>
 									</li>
 									<li class="span1">
-										<a href="themes/images/ladies/5.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 5"><img src="themes/images/ladies/5.jpg" alt=""></a>
+										<a href="themes/images/ladies/5.jpg" class="thumbnail" data-fancybox-group="group1"><img src="themes/images/ladies/5.jpg" alt=""></a>
 									</li>
 								</ul>
 							</div>
 							<div class="span5">
-								<address>
-									<strong>Brand:</strong> <span>Apple</span><br>
-									<strong>Product Code:</strong> <span>Product 14</span><br>
-									<strong>Reward Points:</strong> <span>0</span><br>
-									<strong>Availability:</strong> <span>Out Of Stock</span><br>								
-								</address>									
-								<h4><strong>Price: $587.50</strong></h4>
+								<?php echo("<h4 id='productName'><strong><span>".$pResult['product_name']."</span></strong></h4>");?>	
+                                <?php  $price = number_format($pResult['price']);?>										
+								<?php echo("<h4 id='price'><strong>&#8358;".$price."</strong></h4>");?>
 							</div>
 							<div class="span5">
 								<form class="form-inline">
-									<label class="checkbox">
-										<input type="checkbox" value=""> Option one is this and that
-									</label>
-									<br/>
-									<label class="checkbox">
-									  <input type="checkbox" value=""> Be sure to include why it's great
-									</label>
-									<p>&nbsp;</p>
 									<label>Qty:</label>
 									<input type="text" class="span1" placeholder="1">
 									<button class="btn btn-inverse" type="submit">Add to cart</button>
@@ -113,10 +110,9 @@
 							<div class="span9">
 								<ul class="nav nav-tabs" id="myTab">
 									<li class="active"><a href="#home">Description</a></li>
-									<li class=""><a href="#profile">Additional Information</a></li>
 								</ul>							 
 								<div class="tab-content">
-									<div class="tab-pane active" id="home">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem</div>
+									<?php echo("<div class='tab-pane active' id='home'>".$pResult['product_description']."</div>");?>
 									<div class="tab-pane" id="profile">
 										<table class="table table-striped shop_attributes">	
 											<tbody>

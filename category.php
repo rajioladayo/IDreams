@@ -203,8 +203,8 @@ else{
 												echo("<li class='span3'>");
 												echo("<div class='product-box'>");
 												echo("<span class='sale_tag'></span>");
-												echo("<p><a href='product_detail.php'><img src='themes/images/ladies/1.jpg' alt='' /></a></p>");
-												echo("<a href='product_detail.php' class='title'>".$result['product_name']."</a><br/>");
+												echo("<p><a href='product_detail.php?id=$result[id]'><img src='themes/images/ladies/1.jpg' alt='' /></a></p>");
+												echo("<a href='product_detail.php?id=$result[id]' class='title'>".$result['product_name']."</a><br/>");
 												echo("<p class='price'>&#8358;".$result['price']."</p>");
 												echo("</div>");
 												echo("</li>");

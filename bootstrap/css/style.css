@@ -72,3 +72,13 @@
 	color:#F00;
 }
 
+#productName{
+	color: #1b1b1b;
+  font-size: 18px;
+}
+
+#price{
+	font-weight: normal;
+  color: #b30000;
+}
+
